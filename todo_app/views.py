@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import *
+from .forms import *   # Assuming you have a form for handling ToDoItem
 
 # Create your views here.
-from django.shortcuts import render, redirect
-from .models import ToDoItem
 
 
 def index(request):
@@ -17,6 +17,20 @@ def add_todo(request):
         ToDoItem.objects.create(title=title, description=description)
         return redirect("index")
     return render(request, "add_todo.html")
+
+
+def edit_todo(request, item_id):
+    todo_item = get_object_or_404(ToDoItem, id=item_id)
+    if request.method == "POST":
+        form = ToDoItemForm(request.POST, instance=todo_item)
+        if form.is_valid():
+            form.save()
+            return redirect("index")  # Redirect to the list view after saving
+    else:
+        form = ToDoItemForm(instance=todo_item)
+
+        
+    return render(request, "edit_todo.html", {"todo_item": todo_item, "form": form})
 
 
 def delete_todo(request, todo_id):

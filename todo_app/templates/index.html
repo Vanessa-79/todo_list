@@ -1,20 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title style="color: red;">To-Do List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .edit-btn {
+            background-color: #f39c12;
+        }
+
+        .edit-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .add-todo {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .add-todo a {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .add-todo a:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 
 <body>
-    <h1 style="color: red;">To-Do List</h1>
-    <ul>
-        {% for item in todo_items %}
-        <li>{{ item.title }} - {{ item.description }} -
-            <a href="{% url 'delete_todo' item.id %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_todo' %}">Add To-Do Item</a>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <ul>
+            {% for item in todo_items %}
+            <li>
+                <span>{{ item.title }} - {{ item.description }}</span>
+                <div>
+                    <a href="{% url 'edit_todo' item.id %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'delete_todo' item.id %}" class="delete-btn">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="add-todo">
+            <a href="{% url 'add_todo' %}">Add To-Do Item</a>
+        </div>
+    </div>
 </body>
 
 </html>
